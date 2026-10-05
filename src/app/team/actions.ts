@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getCurrentHotel } from "@/lib/hotels/current";
+import { getSiteUrl } from "@/lib/site-url";
 
 function field(formData: FormData, key: string) {
   const value = formData.get(key);
@@ -36,7 +37,7 @@ export async function inviteTeamMember(formData: FormData) {
     redirectError("invite-failed");
   }
 
-  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");
+  const siteUrl = getSiteUrl();
   const { error: emailError } = await supabase.auth.signInWithOtp({
     email,
     options: {

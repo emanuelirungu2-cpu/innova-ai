@@ -49,7 +49,6 @@ Deploy the `work/innova-ai` folder to your hosting provider (for example, Vercel
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-- `NEXT_PUBLIC_SITE_URL` — your deployed `https://` origin, with no path
 - `OPENAI_API_KEY`
 - `OPENAI_MODEL`
 - `ENFORCE_SUBSCRIPTIONS=false` while testing
@@ -57,6 +56,8 @@ Deploy the `work/innova-ai` folder to your hosting provider (for example, Vercel
 After the first deployment, create a webhook in Stripe with this endpoint:
 
 `https://YOUR-DEPLOYED-DOMAIN/api/stripe/webhook`
+
+Vercel supplies the app's deployed URL automatically for sign-in, invitation, and billing redirects, so you do not need to add `NEXT_PUBLIC_SITE_URL` in Vercel.
 
 Enable these events: `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `customer.subscription.paused`, and `customer.subscription.resumed`. Copy the endpoint signing secret into `STRIPE_WEBHOOK_SECRET`, save the environment variables, and redeploy.
 

@@ -2,16 +2,13 @@
 
 import { redirect } from "next/navigation";
 import { getCurrentHotel } from "@/lib/hotels/current";
+import { getSiteUrl } from "@/lib/site-url";
 
 const planPriceEnvironment: Record<string, string> = {
   starter: "STRIPE_PRICE_ID_STARTER",
   growth: "STRIPE_PRICE_ID_GROWTH",
   multi_property: "STRIPE_PRICE_ID_MULTI_PROPERTY",
 };
-
-function siteUrl() {
-  return (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");
-}
 
 async function stripePost(path: string, fields: URLSearchParams) {
   const secret = process.env.STRIPE_SECRET_KEY;
@@ -50,8 +47,8 @@ export async function startSubscriptionCheckout(formData: FormData) {
     mode: "subscription",
     "line_items[0][price]": priceId,
     "line_items[0][quantity]": "1",
-    success_url: `${siteUrl()}/billing?success=1`,
-    cancel_url: `${siteUrl()}/billing?cancelled=1`,
+    success_url: `${getSiteUrl()}/billing?success=1`,
+    cancel_url: `${getSiteUrl()}/billing?cancelled=1`,
     "allow_promotion_codes": "true",
     "client_reference_id": hotel.id,
     "metadata[hotel_id]": hotel.id,
@@ -90,7 +87,7 @@ export async function openCustomerPortal() {
   try {
     const response = await stripePost("billing_portal/sessions", new URLSearchParams({
       customer: subscription.stripe_customer_id,
-      return_url: `${siteUrl()}/billing`,
+      return_url: `${getSiteUrl()}/billing`,
     }));
     const result = await response.json() as { url?: string };
     if (!response.ok || !result.url) redirect("/billing?error=portal-failed");

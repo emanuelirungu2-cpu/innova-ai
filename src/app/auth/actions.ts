@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
+import { getSiteUrl } from "@/lib/site-url";
 
 function formString(formData: FormData, key: string) {
   const value = formData.get(key);
@@ -36,7 +37,7 @@ export async function sendSignInLink(formData: FormData) {
   if (!email || email.length > 254) redirect("/login?error=invalid-email");
   if (!isSupabaseConfigured()) redirect("/login?error=setup");
   const supabase = await createClient();
-  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+  const siteUrl = getSiteUrl();
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: { shouldCreateUser: false, emailRedirectTo: `${siteUrl}/auth/callback` },
@@ -60,7 +61,7 @@ export async function signUp(formData: FormData) {
   if (!isSupabaseConfigured()) redirect("/signup?error=setup");
 
   const supabase = await createClient();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const siteUrl = getSiteUrl();
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
