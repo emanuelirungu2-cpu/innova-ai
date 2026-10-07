@@ -72,7 +72,7 @@ export function DashboardView({
           <Link className="nav-item" href="/team"><span>♙</span> Team</Link>
         </nav>
         <div className="sidebar-bottom">
-          <a className="nav-item" href="#settings"><span>⚙</span> Settings</a>
+          <a className="nav-item" href="/dashboard/settings"><span>⚙</span> Settings</a>
           <div className="user-card"><span className="user-avatar">{managerName.slice(0, 2).toUpperCase()}</span><span className="property-copy"><strong>{managerName}</strong><small>Hotel owner</small></span><form action={signOut}><button className="signout-button" type="submit">Sign out</button></form></div>
         </div>
       </aside>
