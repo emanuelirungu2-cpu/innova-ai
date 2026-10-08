@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.vercel.innova_ai_47az.twa",
+      "sha256_cert_fingerprints": [
+        "6D:A8:0D:E3:5E:BC:A3:47:B2:38:F3:D1:C2:FF:13:C3:75:D6:C1:7E:DB:77:84:50:B9:FD:A8:3F:E0:1D:49:5C"
+      ]
+    }
+  }
+]
